@@ -256,7 +256,6 @@ socket.on("connect", function(status){
     const prevGroupBtn = $(pager).find(".get-prev-group-btn").get(0);
     const nextGroupBtn = $(pager).find(".get-next-group-btn").get(0);
 
-    const counterSelector = ".items-counter";
     const pageSelector = "#product-catalogue-pager .page-btn";
 
     const counters  = $(".items-counter").toArray();
@@ -289,7 +288,7 @@ socket.on("connect", function(status){
             options: { skip:0 }
         }, function(err, num){
             max = num; 
-            $(counterSelector).text(max);
+            $(".count").text(max);
             debugMode && console.log("max:", max);
         });
     }
@@ -325,14 +324,41 @@ socket.on("connect", function(status){
     function getItems(){
 
         socket.emit("mongo find", {
+
             selectors: {},
             collection: collection,
             options: { skip:skip, limit:limit }
+
         }, function(err, docs){
             debugMode && console.log("docs:", docs);
 
             if ( !docs.length ) return;
-            debugMode && console.log( docs );
+
+            $(displayObjects).children().remove(); // important!
+
+            docs.forEach(function(doc, index){
+
+                var card = document.createElement("li");
+                card.id = doc._id; // card.data = doc; // optional!
+                card.classList.add("well", "product-card");
+                card.style.cssText = "vertical-align:middle!important;";
+
+                var img = new Image();
+                img.classList.add("thumbnail");
+                img.style.cssText = "width:100%;height:auto;margin:0 auto 10px auto;";
+                var url = "https://i.imgur.com/" + doc.preview[0] + "s.jpg";
+
+
+
+
+
+
+
+
+
+
+
+            });
 
         });
 
