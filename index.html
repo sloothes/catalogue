@@ -209,7 +209,34 @@
 
 <script>
 
-(function(){
+//  Socketcluster.
+
+    var socket = socketCluster.create({
+        hostname: "anywhere3d.com",
+        codecEngine: scCodecMinBin,
+    });
+
+    socket.on("connect", function(status){
+        debugMode && console.log({"status": status});
+    });
+
+    socket.on("error", function (err) {
+        console.error( err.stack );
+    });
+
+    socket.on("authStateChange", function( state ){
+        debugMode && console.log({"authStateChange": state});
+    });
+
+    socket.on("subscribe", function( name, object ){
+        debugMode && console.log(`subscribed successfully to "${name}" channel:`, object);
+    });
+
+</script>
+
+<script>
+
+socket.on("connect", function(status){
 
 //  Pager.
 
@@ -229,6 +256,7 @@
     const prevGroupBtn = $(pager).find(".get-prev-group-btn").get(0);
     const nextGroupBtn = $(pager).find(".get-next-group-btn").get(0);
 
+    const counterSelector = ".items-counter";
     const pageSelector = "#product-catalogue-pager .page-btn";
 
     const counters  = $(".items-counter").toArray();
@@ -249,13 +277,71 @@
     var currentpage = 0;
     var currentindex = 0;
 
-    var collection = "products";
+    const collection = "products";
 
 //  Signals.
     var Signal = signals.Signal;
 
+    function count(){
+        socket.emit("mongo count", {
+            selectors: {},
+            collection: collection,
+            options: { skip:0 }
+        }, function(err, num){
+            max = num; 
+            $(counterSelector).text(max);
+            debugMode && console.log("max:", max);
+        });
+    }
+
+    function reset(){
+
+        max = 0;
+        skip = 0;
+        lastpage = 0;
+        currentpage = 0;
+        currentindex = 0;
+
+    }
+
+    function init(){
+
+    //  Page buttons numbering.
+        pagebuttons.each(function(i){
+            pagebuttons[i].skip = limit * i;
+            $(pagebuttons[i]).text( i + 1 );
+        });
+
+    //  Current button setup.
+        pagebuttons.removeClass("btn-primary");
+        var currentButton = pagebuttons.get(0);
+        $(currentButton).addClass("btn-primary");
+
+    //  Clear listed objects.
+        $(displayObjects).children().remove();
+
+    }
+
+    function get_items(){
+
+        socket.emit("mongo find", {
+            selectors: {},
+            collection: collection,
+            options: { skip:skip, limit:limit }
+        }, function(err, docs){
+            debugMode && console.log("docs:", docs);
+
+            if ( !docs.length ) return;
+            debugMode && console.log( docs );
+
+        });
+
+    }
 
 
+    count();
+    init();
+//  get_items();
 
 
 
