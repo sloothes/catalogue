@@ -322,7 +322,7 @@ socket.on("connect", function(status){
 
     }
 
-    function get_items(){
+    function getItems(){
 
         socket.emit("mongo find", {
             selectors: {},
@@ -341,8 +341,7 @@ socket.on("connect", function(status){
 
     count();
     init();
-//  get_items();
-
+    getItems();
 
 
 });
