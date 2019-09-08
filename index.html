@@ -211,6 +211,48 @@
 
 (function(){
 
+//  Pager.
+
+    const pager = document.getElementById("product-catalogue-pager");
+    const displayObjects = document.getElementById("products-display");
+    const catalogItemsPanel = document.getElementById("catalogue-items-panel");
+    const productCatalogPanel = document.getElementById("product-catalogue-panel");
+    const productCatalogPager = document.getElementById("product-catalogue-pager");
+
+    var pagebuttons = $(pager).find(".page-btn");
+    var pageslength = $(pager).find(".page-btn").length;
+
+    const firstPageBtn = $(pager).find(".first-page-btn").get(0);
+    const lastPageBtn  = $(pager).find(".last-page-btn").get(0);
+    const prevPageBtn  = $(pager).find(".get-prev-btn").get(0);
+    const nextPageBtn  = $(pager).find(".get-next-btn").get(0);
+    const prevGroupBtn = $(pager).find(".get-prev-group-btn").get(0);
+    const nextGroupBtn = $(pager).find(".get-next-group-btn").get(0);
+
+    const pageSelector = "#product-catalogue-pager .page-btn";
+
+    const counters  = $(".items-counter").toArray();
+    const counterRT = document.getElementById("counter-top-right");
+    const counterBC = document.getElementById("counter-bottom-center");
+
+    var timeout;
+    var interval;
+    var selectors;
+    var delay = 200;
+
+    var limit = 12;
+    var currency = "$"; // important!
+
+    var max = 0;
+    var skip = 0;
+    var lastpage = 0;
+    var currentpage = 0;
+    var currentindex = 0;
+
+    var collection = "products";
+
+//  Signals.
+    var Signal = signals.Signal;
 
 
 
