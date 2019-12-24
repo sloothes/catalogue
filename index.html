@@ -350,7 +350,7 @@ socket.on("connect", function(status){
 
 			//	demo.
 				img.addEventListener( "load", function onload(){
-					img.remove( "load", onload );
+					img.removeEventListener( "load", onload );
 					displayObjects.appendChild(card); // demo.
 				});
 				img.src = url;
