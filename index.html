@@ -348,17 +348,15 @@ socket.on("connect", function(status){
                 img.style.cssText = "width:100%;height:auto;margin:0 auto 10px auto;";
                 var url = "https://i.imgur.com/" + doc.preview[0] + "s.jpg";
 
-				$(card).append(img);			// demo.
-				$(displayObjects).append(card); // demo.
+			//	demo.
+				img.addEventListener( "load", function onload(){
+					img.remove( "load", onload );
+					displayObjects.appendChild(card); // demo.
+				});
+				img.src = url;
+				card.appendChild(img);
 
-
-
-
-
-
-
-
-
+			//	todo...
 
             });
 
