@@ -240,11 +240,11 @@ socket.on("connect", function(status){
 
 //  Pager.
 
-    const pager = document.getElementById("product-catalogue-pager");
+    const pager = document.getElementById("products-catalogue-pager");
     const displayObjects = document.getElementById("products-display");
     const catalogItemsPanel = document.getElementById("catalogue-items-panel");
-    const productCatalogPanel = document.getElementById("product-catalogue-panel");
-    const productCatalogPager = document.getElementById("product-catalogue-pager");
+    const productCatalogPanel = document.getElementById("products-catalogue-panel");
+    const productCatalogPager = document.getElementById("products-catalogue-pager");
 
     var pagebuttons = $(pager).find(".page-btn");
     var pageslength = $(pager).find(".page-btn").length;
@@ -256,7 +256,7 @@ socket.on("connect", function(status){
     const prevGroupBtn = $(pager).find(".get-prev-group-btn").get(0);
     const nextGroupBtn = $(pager).find(".get-next-group-btn").get(0);
 
-    const pageSelector = "#product-catalogue-pager .page-btn";
+    const pageSelector = "#products-catalogue-pager .page-btn";
 
     const counters  = $(".items-counter").toArray();
     const counterRT = document.getElementById("counter-top-right");
